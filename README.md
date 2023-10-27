@@ -15,3 +15,6 @@ Vous devez concevoir une application destinée a aider les étudiants dans leur 
 
 ## Use Case Diagramme: 
 ![Alt text](image.png)
+
+## Librairie a installé:
+-biweekly http://search.maven.org/remotecontent?filepath=net/sf/biweekly/biweekly/0.6.7/biweekly-0.6.7.jar
