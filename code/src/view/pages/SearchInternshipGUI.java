@@ -2,7 +2,6 @@ package view.pages;
 import view.components.*;
 import model.Internship;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 public class SearchInternshipGUI extends InterfaceApp {

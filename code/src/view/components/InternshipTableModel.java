@@ -23,18 +23,13 @@ public class InternshipTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         Internship internship = internships.get(row);
-        switch (column) {
-            case 0:
-                return internship.getTitle();
-            case 1:
-                return internship.getSpeciality();
-            case 2:
-                return internship.getTown();
-            case 3:
-                return internship.getDescription();
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> internship.getTitle();
+            case 1 -> internship.getSpeciality();
+            case 2 -> internship.getTown();
+            case 3 -> internship.getDescription();
+            default -> null;
+        };
     }
 
     @Override
