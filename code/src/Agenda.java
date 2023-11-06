@@ -27,17 +27,17 @@ public class Agenda{
 
         //Prepare frame
         frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
-        frmMain.setSize(330, 375); //Set size to 400x400 pixels
+        frmMain.setSize(330, 375); //Set size to 330x375 pixels
         pane = frmMain.getContentPane(); //Get content pane
         pane.setLayout(null); //Apply null layout
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 
         //Create controls
-        lblMonth = new JLabel ("January");
+        lblMonth = new JLabel ("");
         lblYear = new JLabel ("Change year:");
         cmbYear = new JComboBox();
-        btnPrev = new JButton ("&lt;&lt;");
-        btnNext = new JButton ("&gt;&gt;");
+        btnPrev = new JButton ("<--");
+        btnNext = new JButton ("-->");
         mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
         tblCalendar = new JTable(mtblCalendar);
         stblCalendar = new JScrollPane(tblCalendar);
@@ -136,11 +136,14 @@ public class Agenda{
         //Get first day of month and number of days
         GregorianCalendar cal = new GregorianCalendar(year, month, 1);
         nod = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
-        som = cal.get(GregorianCalendar.DAY_OF_WEEK);
+        som = (cal.get(GregorianCalendar.DAY_OF_WEEK)+6);
+        if (som>7)
+            som=som%7;
+
 
         //Draw calendar
         for (int i=1; i<=nod; i++){
-            int row = new Integer((i+som-2)/7);
+            int row = (i+som-2)/7;
             int column  =  (i+som-2)%7;
             mtblCalendar.setValueAt(i, row, column);
         }
@@ -152,7 +155,7 @@ public class Agenda{
     static class tblCalendarRenderer extends DefaultTableCellRenderer{
         public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-            if (column == 0 || column == 6){ //Week-end
+            if (column == 5 || column == 6){ //Week-end
                 setBackground(new Color(255, 220, 220));
             }
             else{ //Week
@@ -162,6 +165,9 @@ public class Agenda{
                 if (Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth && currentYear == realYear){ //Today
                     setBackground(new Color(220, 220, 255));
                 }
+            }
+            if (value==null){
+                setBackground(new Color(200,200,200));
             }
             setBorder(null);
             setForeground(Color.black);
