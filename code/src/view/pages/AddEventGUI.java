@@ -2,70 +2,57 @@ package view.pages;
 import view.components.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AddEventGUI extends InterfaceApp {
-    private DefaultTextField eventTitleField;
-    private DefaultTextField eventDescriptionField;
-    private DefaultTextField eventLocationField;
-    private PrimaryButton createButton;
-    private PrimaryButton modifyButton;
-    private PrimaryButton deleteButton;
+    private final JTextField eventTitleField = new DefaultTextField();
+    private final JTextField eventDescriptionField = new DefaultTextField();
+    private final JTextField eventLocationField = new DefaultTextField();
     JComboBox<String> eventList;
     private ArrayList<String> events;
 
     public AddEventGUI() {
-        super("Ajout d'évènement");
+        super("Gestion d'évènements");
+
+        // TODO : Get events from db
         events = new ArrayList<>();
+        // Filling the events combo box
+        eventList = new JComboBox<>(events.toArray(new String[0]));
 
-        eventTitleField = new DefaultTextField();
-        eventDescriptionField = new DefaultTextField();
-        eventLocationField = new DefaultTextField();
-        createButton = new PrimaryButton("Create Event");
-        modifyButton = new PrimaryButton("Modify Event");
-        deleteButton = new PrimaryButton("Delete Event");
-        eventList = new JComboBox<>();
+        JButton createButton = new PrimaryButton("Créer");
+        JButton modifyButton = new PrimaryButton("Modifier");
+        JButton deleteButton = new SecondaryButton("Supprimer");
 
-        createButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createEvent();
-            }
-        });
+        createButton.addActionListener(e -> createEvent());
+        modifyButton.addActionListener(e -> modifyEvent());
+        deleteButton.addActionListener(e -> deleteEvent());
 
-        modifyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modifyEvent();
-            }
-        });
+        // Creation event panel
+        JPanel creationPanel = new DefaultPanel(50);
+        creationPanel.add(new TitleLabel("Créer un évènement"));
+        creationPanel.add(new DefaultLabel("Titre"));
+        creationPanel.add(eventTitleField);
+        creationPanel.add(new DefaultLabel("Description"));
+        creationPanel.add(eventDescriptionField);
+        creationPanel.add(new DefaultLabel("Emplacement"));
+        creationPanel.add(eventLocationField);
+        creationPanel.add(createButton);
+        mainPanel.add(creationPanel);
 
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteEvent();
-            }
-        });
-
-        // Add components to the frame
-        DefaultPanel panel = new DefaultPanel();
-        panel.add(new DefaultLabel("Event Title:"));
-        panel.add(eventTitleField);
-        panel.add(new DefaultLabel("Event Description:"));
-        panel.add(eventDescriptionField);
-        panel.add(new DefaultLabel("Event Location:"));
-        panel.add(eventLocationField);
-        panel.add(createButton);
-        panel.add(new DefaultLabel("Select Event:"));
+        // Modify/Delete event panel
+        DefaultPanel panel = new DefaultPanel(50);
+        panel.add(new TitleLabel("Modifier un évènement"));
+        panel.add(new DefaultLabel("Sélectionner un évènement"));
         panel.add(eventList);
         panel.add(modifyButton);
         panel.add(deleteButton);
+        mainPanel.add(panel);
 
-        add(panel);
+        // Makes the window scrollable
+        endFrameCreation();
     }
 
+    // TODO : Finish this
     public void createEvent() {
         String title = eventTitleField.getText();
         String description = eventDescriptionField.getText();
@@ -75,6 +62,7 @@ public class AddEventGUI extends InterfaceApp {
         eventList.addItem(title); 
     }
 
+    // TODO : Finish this
     public void modifyEvent() {
         String selectedEvent = (String) eventList.getSelectedItem();
 
