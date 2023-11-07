@@ -1,7 +1,5 @@
 package view.pages;
-import model.search.ISearch;
-import model.search.FilterBehavior;
-import model.search.SearchBehavior;
+import model.search.*;
 import view.components.*;
 import model.Internship;
 import javax.swing.*;
@@ -10,8 +8,10 @@ import java.util.ArrayList;
 public class SearchInternshipGUI extends InterfaceApp {
     private final JTextField searchStringField = new DefaultTextField();
     private final InternshipTableModel results = new InternshipTableModel();
-    private final JComboBox<String> specialityComboBox;
-    private final JComboBox<String> siteComboBox;
+    private final JComboBox<String> specialityComboBox =  new JComboBox<>(new String[] {"", "PeiP1", "IDU3", "IDU4", "SNI3", "SNI4"});
+    private final JComboBox<String> siteComboBox = new JComboBox<>(new String[]{"", "Annecy", "Chambéry"});
+    private final JComboBox<String> sortComboBox = new JComboBox<>(new String[]{"", "Par titre", "Par année"});
+
     private ArrayList<Internship> internships;
 
     public SearchInternshipGUI() {
@@ -25,7 +25,7 @@ public class SearchInternshipGUI extends InterfaceApp {
                 "VIENNE",
                 "22 Rue de la Sévenne",
                 "PeiP1",
-                2023,
+                2024,
                 "ALBERTAZZI",
                 "Chambéry",
                 "France"
@@ -41,21 +41,31 @@ public class SearchInternshipGUI extends InterfaceApp {
                 "Chambéry",
                 "France"
         ));
+        internships.add(new Internship(
+                "Stage SOPRA",
+                "Développement ",
+                "Annecy-le-Vieux",
+                "Rue du parmelan joyeux",
+                "FI4",
+                2022,
+                "Jean pierre pernault company",
+                "Annecy",
+                "France"
+        ));
 
         JButton searchButton = new PrimaryButton("Rechercher");
 
         searchButton.addActionListener(e -> updateResultPanel());
 
         JPanel searchPanel = new DefaultPanel(50);
-        String[] options = {"", "PeiP1", "IDU3", "IDU4", "SNI3", "SNI4"};
-        specialityComboBox = new JComboBox<>(options);
-        siteComboBox = new JComboBox<>(new String[]{"", "Annecy", "Chambéry"});
         searchPanel.add(new TitleLabel("Recherche de stage"));
         searchPanel.add(searchStringField);
         searchPanel.add(new DefaultLabel("Spécialité"));
         searchPanel.add(specialityComboBox);
         searchPanel.add(new DefaultLabel("Site"));
         searchPanel.add(siteComboBox);
+        searchPanel.add(new DefaultLabel("Ordre d'affichage"));
+        searchPanel.add(sortComboBox);
         searchPanel.add(searchButton);
         mainPanel.add(searchPanel);
 
@@ -75,6 +85,7 @@ public class SearchInternshipGUI extends InterfaceApp {
         String search = searchStringField.getText();
         String formation = specialityComboBox.getSelectedItem().toString();
         String site = siteComboBox.getSelectedItem().toString();
+        String sortBy = sortComboBox.getSelectedItem().toString();
         results.clear();
 
         ArrayList<ISearch> temp = new ArrayList<>(internships);
@@ -87,6 +98,11 @@ public class SearchInternshipGUI extends InterfaceApp {
             searchBehavior = new FilterBehavior(searchBehavior, "speciality", formation);
         if(!site.isEmpty())
             searchBehavior = new FilterBehavior(searchBehavior, "site", site);
+        switch (sortBy) {
+            case "": break;
+            case "Par titre": searchBehavior = new SortByTitleStrategy(searchBehavior, true); break;
+            case "Par année": searchBehavior = new SortByDateStrategy(searchBehavior, true); break;
+        }
 
         ArrayList<ISearch> shownInternships = searchBehavior.apply();
 
