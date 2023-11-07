@@ -206,4 +206,10 @@ public class AgendaGUI extends InterfaceApp {
             }
         }
     }
+    public static void main(String[] args){
+
+        AgendaGUI agn = new AgendaGUI();
+
+    }
+
 }
