@@ -10,7 +10,7 @@ abstract public class InterfaceApp extends JFrame {
     private static final long serialVersionUID = 1L;
     protected static final int WIDTH = 1000;
     protected static final int HEIGHT = 700;
-    ImageIcon logo = new ImageIcon("./images/logo.png");
+    ImageIcon logo = new ImageIcon("code/src/images/logo.png");
     protected JPanel mainPanel;
 
     public InterfaceApp(String title) {
