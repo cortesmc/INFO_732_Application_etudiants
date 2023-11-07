@@ -63,8 +63,8 @@ public class SearchInternshipGUI extends InterfaceApp {
     public void updateResultPanel() {
         String search = searchStringField.getText();
         results.clear();
-        internships = new FilterBehavior(internships, "title", search).apply();
-        for (DataSource internship : internships) {
+        ArrayList<DataSource> shownInternships = new FilterBehavior(internships, "title", search).apply();
+        for (DataSource internship : shownInternships) {
             results.add((Internship)internship);
         }
     }
