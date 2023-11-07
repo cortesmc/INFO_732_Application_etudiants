@@ -1,5 +1,5 @@
 package model.search;
 
-public interface ComparableDataSource {
+public interface DataSource {
     public void apply();
 }

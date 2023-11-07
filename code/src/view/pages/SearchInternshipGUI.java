@@ -1,4 +1,6 @@
 package view.pages;
+import model.search.DataSource;
+import model.search.FilterBehavior;
 import view.components.*;
 import model.Internship;
 import javax.swing.*;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 public class SearchInternshipGUI extends InterfaceApp {
     private final JTextField searchStringField = new DefaultTextField();
     private final InternshipTableModel results = new InternshipTableModel();
-    private ArrayList<Internship> internships;
+    private ArrayList<DataSource> internships;
 
     public SearchInternshipGUI() {
         super("Stages");
@@ -60,11 +62,10 @@ public class SearchInternshipGUI extends InterfaceApp {
     // TODO : Finish this
     public void updateResultPanel() {
         String search = searchStringField.getText();
-//        if(internships.isEmpty())
-//            results.add(new DefaultLabel("Pas de résultats"));
-
-        for (Internship internship : internships) {
-            results.add(internship);
+        results.clear();
+        internships = new FilterBehavior(internships, "title", search).apply();
+        for (DataSource internship : internships) {
+            results.add((Internship)internship);
         }
     }
 }

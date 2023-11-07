@@ -41,4 +41,9 @@ public class InternshipTableModel extends AbstractTableModel {
         internships.add(internship);
         fireTableRowsInserted(internships.size() - 1, internships.size() - 1);
     }
+
+    public void clear() {
+        internships.clear();
+        fireTableDataChanged();
+    }
 }

@@ -1,8 +1,8 @@
 package model;
 
-import model.search.ComparableDataSource;
+import model.search.DataSource;
 
-public class Internship implements ComparableDataSource {
+public class Internship implements DataSource {
     private String title;
     private String description;
     private String town;
