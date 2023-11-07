@@ -1,4 +1,6 @@
-package view.pages;
+package model.strategy_pattern;
+
+import view.pages.InterfaceApp;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -6,7 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class AgendaGUI extends InterfaceApp {
+public class MonthPatern extends JPanel{
+    /*
     static JLabel lblMonth, lblYear;
     static JButton btnPrev, btnNext;
     static JTable tblCalendar;
@@ -17,7 +20,7 @@ public class AgendaGUI extends InterfaceApp {
     static JPanel pnlCalendar;
     static int realYear, realMonth, realDay, currentYear, currentMonth;
 
-    public AgendaGUI() {
+    public MonthPatern() {
         super("Agenda");
         //Look and feel
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
@@ -78,6 +81,7 @@ public class AgendaGUI extends InterfaceApp {
         realYear = cal.get(GregorianCalendar.YEAR); //Get year
         currentMonth = realMonth; //Match month and year
         currentYear = realYear;
+
 
         //Add headers
         String[] headers = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"}; //All headers
@@ -208,8 +212,8 @@ public class AgendaGUI extends InterfaceApp {
     }
     public static void main(String[] args){
 
-        AgendaGUI agn = new AgendaGUI();
+        MonthPatern agn = new MonthPatern();
 
     }
 
-}
+*/}
