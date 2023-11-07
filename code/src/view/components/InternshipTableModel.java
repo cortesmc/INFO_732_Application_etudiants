@@ -26,8 +26,11 @@ public class InternshipTableModel extends AbstractTableModel {
         return switch (column) {
             case 0 -> internship.getTitle();
             case 1 -> internship.getSpeciality();
-            case 2 -> internship.getTown();
-            case 3 -> internship.getDescription();
+            case 2 -> internship.getDescription();
+            case 3 -> internship.getYear();
+            case 4 -> internship.getTown();
+            case 5 -> internship.getAdress();
+            case 6 -> internship.getSite();
             default -> null;
         };
     }
