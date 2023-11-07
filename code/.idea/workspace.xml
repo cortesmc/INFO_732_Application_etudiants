@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dea2b702-a2ab-4d8b-ae67-60b7c847f7fa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/pages/AgendaGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/AgendaGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.iml" beforeDir="false" afterPath="$PROJECT_DIR$/App.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/pages/iCal4jTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/iCal4jTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +49,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Carlos Andres Cortes/OneDrive/Polytech/Polytech4A/S1/INFO732/Projet/INFO_732_Application_etudiants/code/jar/commons-beanutils-1.9.4.jar",
     "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
