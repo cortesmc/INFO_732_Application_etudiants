@@ -1,6 +1,6 @@
 package model;
 
-public class Internship {
+public class Internship implements Comparable<Internship> {
     private String title;
     private String description;
     private String town;
