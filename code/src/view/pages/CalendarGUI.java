@@ -69,44 +69,37 @@ public class CalendarGUI extends JFrame {
     }
 
     private void displayEventsForDay(int day) {
-        LocalDate selectedDate = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), day);
-        StringBuilder eventDetails = new StringBuilder();
-
         // Replace the URL with your iCalendar URL
         try {
             URL url = new URL("https://ade-usmb-ro.grenet.fr/jsp/custom/modules/plannings/direct_cal.jsp?data=b5cfb898a9c27be94975c12c6eb30e9233bdfae22c1b52e2cd88eb944acf5364c69e3e5921f4a6ebe36e93ea9658a08f,1&resources=2393&projectId=1&calType=ical&lastDate=2042-08-14");
             InputStream in = url.openStream();
+
             CalendarBuilder builder = new CalendarBuilder();
             Calendar calendar = builder.build(in);
 
+            StringBuilder eventDetails = new StringBuilder();
+            System.out.println(calendar.getComponentList());
+
+            LocalDate date = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), day);
             for (Iterator<net.fortuna.ical4j.model.component.CalendarComponent> i = calendar.getComponents().iterator(); i.hasNext();) {
                 Component component = i.next();
                 if (component.getName().equals("VEVENT")) {
                     VEvent event = (VEvent) component;
 
+                    // Ensure that the properties are of type Property
+                    Property summary = event.getProperty("SUMMARY").orElse(null);
                     Property startDate = event.getProperty("DTSTART").orElse(null);
-                    java.util.Date startDateDate = startDate.getDate();
-                    java.util.Calendar calendar = java.util.Calendar.getInstance();
-                    calendar.setTime(startDateDate);
-                    int year = calendar.get(java.util.Calendar.YEAR);
-                    int month = calendar.get(java.util.Calendar.MONTH) + 1; // Month is 0-based
-                    int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-                    LocalDate eventDate = LocalDate.of(year, month, day);
-                    LocalDate eventDate = LocalDate.of(startDateValue.getYear(), startDateValue.getMonth(), startDateValue.getDay());
+                    Property endDate = event.getProperty("DTEND").orElse(null);
 
-                    if (eventDate.equals(selectedDate)) {
-                        Property summary = event.getProperty("SUMMARY").orElse(null);
-                        Property endDate = event.getProperty("DTEND").orElse(null);
-
-                        if (summary != null && startDate != null && endDate != null) {
-                            eventDetails.append("Summary: ").append(summary.getValue()).append("\n");
-                            eventDetails.append("Start Date: ").append(startDate.getValue()).append("\n");
-                            eventDetails.append("End Date: ").append(endDate.getValue()).append("\n");
-                            eventDetails.append("-------------\n");
-                        }
+                    if (summary != null && startDate != null && endDate != null) {
+                        System.out.println("Summary: " + summary.getValue());
+                        System.out.println("Start Date: " + startDate.getValue());
+                        System.out.println("End Date: " + endDate.getValue());
+                        System.out.println("-------------");
                     }
                 }
             }
+            System.out.println("##################");
 
             eventTextArea.setText(eventDetails.toString());
 
@@ -114,7 +107,6 @@ public class CalendarGUI extends JFrame {
             e.printStackTrace();
         }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
