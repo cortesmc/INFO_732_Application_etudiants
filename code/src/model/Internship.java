@@ -1,6 +1,8 @@
 package model;
 
-public class Internship implements Comparable<Internship> {
+import model.search.ComparableDataSource;
+
+public class Internship implements ComparableDataSource {
     private String title;
     private String description;
     private String town;
@@ -57,5 +59,10 @@ public class Internship implements Comparable<Internship> {
 
     public String getTown() {
         return town;
+    }
+
+    @Override
+    public void apply() {
+
     }
 }
