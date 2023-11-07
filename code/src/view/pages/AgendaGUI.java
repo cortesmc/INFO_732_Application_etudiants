@@ -1,23 +1,24 @@
+package view.pages;
+
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class Agenda{
+public class AgendaGUI extends InterfaceApp {
     static JLabel lblMonth, lblYear;
     static JButton btnPrev, btnNext;
     static JTable tblCalendar;
     static JComboBox cmbYear;
-    static JFrame frmMain;
     static Container pane;
     static DefaultTableModel mtblCalendar; //Table model
     static JScrollPane stblCalendar; //The scrollpane
     static JPanel pnlCalendar;
     static int realYear, realMonth, realDay, currentYear, currentMonth;
 
-    public static void main (String args[]){
+    public AgendaGUI() {
+        super("Agenda");
         //Look and feel
         try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
         catch (ClassNotFoundException e) {}
@@ -26,11 +27,9 @@ public class Agenda{
         catch (UnsupportedLookAndFeelException e) {}
 
         //Prepare frame
-        frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
-        frmMain.setSize(330, 375); //Set size to 330x375 pixels
-        pane = frmMain.getContentPane(); //Get content pane
+        setSize(330, 375); //Set size to 330x375 pixels
+        pane = getContentPane(); //Get content pane
         pane.setLayout(null); //Apply null layout
-        frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 
         //Create controls
         lblMonth = new JLabel ("");
@@ -70,8 +69,7 @@ public class Agenda{
         stblCalendar.setBounds(10, 50, 300, 250);
 
         //Make frame visible
-        frmMain.setResizable(false);
-        frmMain.setVisible(true);
+        setResizable(false);
 
         //Get real month/year
         GregorianCalendar cal = new GregorianCalendar(); //Create calendar
