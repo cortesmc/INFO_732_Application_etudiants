@@ -2,10 +2,10 @@ package model.search;
 
 import java.util.ArrayList;
 
-public abstract class SearchBehavior {
-    protected ArrayList<DataSource> wrappee;
+public class SearchBehavior implements ISearch {
+    protected ArrayList<ISearch> wrappee;
 
-    public SearchBehavior(ArrayList<DataSource> source) {
+    public SearchBehavior(ArrayList<ISearch> source) {
         wrappee = source;
     }
     public SearchBehavior() {
@@ -13,5 +13,7 @@ public abstract class SearchBehavior {
     }
 
     // TODO : Implement this
-    public abstract ArrayList<DataSource> apply();
+    public ArrayList<ISearch> apply() {
+        return wrappee;
+    }
 }

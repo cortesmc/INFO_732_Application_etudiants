@@ -1,6 +1,7 @@
 package view.pages;
-import model.search.DataSource;
+import model.search.ISearch;
 import model.search.FilterBehavior;
+import model.search.SearchBehavior;
 import view.components.*;
 import model.Internship;
 import javax.swing.*;
@@ -9,7 +10,9 @@ import java.util.ArrayList;
 public class SearchInternshipGUI extends InterfaceApp {
     private final JTextField searchStringField = new DefaultTextField();
     private final InternshipTableModel results = new InternshipTableModel();
-    private ArrayList<DataSource> internships;
+    private final JComboBox<String> specialityComboBox;
+    private final JComboBox<String> siteComboBox;
+    private ArrayList<Internship> internships;
 
     public SearchInternshipGUI() {
         super("Stages");
@@ -44,7 +47,15 @@ public class SearchInternshipGUI extends InterfaceApp {
         searchButton.addActionListener(e -> updateResultPanel());
 
         JPanel searchPanel = new DefaultPanel(50);
+        String[] options = {"", "PeiP1", "IDU3", "IDU4", "SNI3", "SNI4"};
+        specialityComboBox = new JComboBox<>(options);
+        siteComboBox = new JComboBox<>(new String[]{"", "Annecy", "Chambéry"});
+        searchPanel.add(new TitleLabel("Recherche de stage"));
         searchPanel.add(searchStringField);
+        searchPanel.add(new DefaultLabel("Spécialité"));
+        searchPanel.add(specialityComboBox);
+        searchPanel.add(new DefaultLabel("Site"));
+        searchPanel.add(siteComboBox);
         searchPanel.add(searchButton);
         mainPanel.add(searchPanel);
 
@@ -62,9 +73,24 @@ public class SearchInternshipGUI extends InterfaceApp {
     // TODO : Finish this
     public void updateResultPanel() {
         String search = searchStringField.getText();
+        String formation = specialityComboBox.getSelectedItem().toString();
+        String site = siteComboBox.getSelectedItem().toString();
         results.clear();
-        ArrayList<DataSource> shownInternships = new FilterBehavior(internships, "title", search).apply();
-        for (DataSource internship : shownInternships) {
+
+        ArrayList<ISearch> temp = new ArrayList<>(internships);
+        temp.addAll(internships);
+        ISearch searchBehavior = new SearchBehavior(temp);
+
+        if(!search.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "title", search);
+        if(!formation.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "speciality", formation);
+        if(!site.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "site", site);
+
+        ArrayList<ISearch> shownInternships = searchBehavior.apply();
+
+        for (ISearch internship : shownInternships) {
             results.add((Internship)internship);
         }
     }

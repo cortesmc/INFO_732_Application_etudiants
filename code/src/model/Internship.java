@@ -1,8 +1,11 @@
 package model;
 
-import model.search.DataSource;
+import model.search.ISearch;
 
-public class Internship implements DataSource {
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Internship implements ISearch {
     private String title;
     private String description;
     private String town;
@@ -62,7 +65,7 @@ public class Internship implements DataSource {
     }
 
     @Override
-    public void apply() {
-
+    public ArrayList<ISearch> apply() {
+        return new ArrayList<>(Collections.singletonList(this));
     }
 }
