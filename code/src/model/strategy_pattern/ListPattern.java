@@ -89,14 +89,14 @@ public class ListPattern implements AgendaGUIStrategy {
     }
 
     @Override
-    public JPanel buildCalendar(Calendar calendar) {
+    public JPanel buildCalendar() {
         JPanel panel = new JPanel();
         panel.add(this.getJpanel()); // Assuming getJpanel() is a method that returns a JPanel
         return panel;
     }
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         JFrame frame = new JFrame("iCalendar Viewer");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
@@ -117,5 +117,5 @@ public class ListPattern implements AgendaGUIStrategy {
 
         // Make the JFrame visible
         frame.setVisible(true);
-    }
+    }*/
 }

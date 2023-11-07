@@ -1,49 +1,77 @@
+package view.pages;
+
+import model.strategy_pattern.AgendaGUIStrategy;
+import model.strategy_pattern.ListPattern;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
-import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.component.VEvent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.Iterator;
+import java.util.Objects;
 
-public class CalendarGUI extends JFrame {
 
-    private YearMonth currentYearMonth;
-    private JTextArea eventTextArea;
+public class CalendarGUI extends InterfaceApp {
+
+
+    private Calendar calendar;
+    private AgendaGUIStrategy panelCreator;
+    private JPanel panel;
 
     public CalendarGUI() {
-        currentYearMonth = YearMonth.now();
-        eventTextArea = new JTextArea(10, 20);
-        eventTextArea.setEditable(false);
-        eventTextArea.setWrapStyleWord(true);
-        eventTextArea.setLineWrap(true);
+        super("Agenda");
+        try{
+            //Initialise calendar
+            String filePath = "code/files/calendar.ics"; // Replace with your .ics file path
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            CalendarBuilder calendarBuilder = new CalendarBuilder();
+            this.calendar = calendarBuilder.build(fileInputStream);
+            fileInputStream.close();
 
-        createUI();
+            // Create panel for button
+            JPanel panel1 = new JPanel();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Calendar GUI");
-        setSize(400, 400);
-        setLocationRelativeTo(null);
+            //Create first panel
+            this.panelCreator = new ListPattern(this.calendar);
+            this.panel=panelCreator.buildCalendar();
+            this.add(panel,BorderLayout.CENTER);
+
+            //Créer le bouton
+            JButton btn = new JButton("Affichage standard");
+            panel1.add(btn);
+            btn.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if (Objects.equals(btn.getText(), "Affichage standard")){
+                        createUIStandard();
+                        btn.setText("Affichage en liste");
+                    } else {
+                        createUIlist();
+                        btn.setText("Affichage standard");
+                    }
+                }
+            });
+            this.add(panel1, BorderLayout.NORTH);
+        } catch (IOException | ParserException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void createUI() {
-        setLayout(new BorderLayout());
+    private void createUIStandard(){
+        panel.setVisible(false);
+        //this.remove(panel);
 
-        createCalendarView();
-
-        JScrollPane eventScrollPane = new JScrollPane(eventTextArea);
-        add(eventScrollPane, BorderLayout.SOUTH);
+    }
+    private void createUIlist() {
+        panel.setVisible(false);
+        panelCreator = new ListPattern(this.calendar);
+        panel = panelCreator.buildCalendar();
+        this.add(panel,BorderLayout.CENTER);
     }
 
-    private void createCalendarView() {
+    /*private void createCalendarView() {
         JPanel calendarPanel = new JPanel(new GridLayout(0, 7));
         add(calendarPanel, BorderLayout.CENTER);
 
@@ -106,7 +134,7 @@ public class CalendarGUI extends JFrame {
         } catch (IOException | ParserException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
