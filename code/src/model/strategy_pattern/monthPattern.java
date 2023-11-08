@@ -4,6 +4,8 @@ package model.strategy_pattern;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -58,6 +60,8 @@ public class monthPattern implements AgendaGUIStrategy {
         btnNext.addActionListener(new btnNext_Action());
         cmbYear.addActionListener(new cmbYear_Action());
 
+
+
         //Add controls to pane
         pnlCalendar.add(lblMonth);
         pnlCalendar.add(lblYear);
@@ -97,9 +101,10 @@ public class monthPattern implements AgendaGUIStrategy {
         tblCalendar.getTableHeader().setReorderingAllowed(false);
 
         //Single cell selection
-        tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setRowSelectionAllowed(true);
+        tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 
         //Set row/column count
         tblCalendar.setRowHeight(38);
@@ -113,7 +118,29 @@ public class monthPattern implements AgendaGUIStrategy {
 
         //Refresh calendar
         refreshCalendar (realMonth, realYear); //Refresh calendar
+        // Add a ListSelectionListener to respond to cell selection
+        tblCalendar.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = tblCalendar.getSelectedRow();
+                    int selectedColumn = tblCalendar.getSelectedColumn();
+                    if (selectedRow >= 0 && selectedColumn >= 0) {
+                        // Do something when a cell is clicked
+                        String text = "";
+                        for(int i = 0; i <= 8; i++) {
+                            text += "LANG702-902-LV2 lundi" + "\n   " + "A-C105 (40pl.)" + "\n    Début: " + "17:15:00"  + "   Fin: " + "19:00:00";
+                            text += "\n\n";
+                        }
+//                        System.out.println(mtblCalendar.getValueAt(selectedRow,selectedColumn));
+                        JOptionPane.showMessageDialog(null, text, "Détails ", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
         return pnlCalendar;
+
+
     }
 
         public static void refreshCalendar(int month, int year){
@@ -206,6 +233,9 @@ public class monthPattern implements AgendaGUIStrategy {
                 }
             }
         }
+
+
+
 
 
 }

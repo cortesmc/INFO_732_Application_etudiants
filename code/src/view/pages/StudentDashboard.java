@@ -54,11 +54,6 @@ public class StudentDashboard extends InterfaceApp implements ActionListener {
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new StudentDashboard().setVisible(true);
-        });
-    }
 }
 
 
