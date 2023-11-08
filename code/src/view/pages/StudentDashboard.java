@@ -1,5 +1,7 @@
 package view.pages;
 
+import view.components.PrimaryButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,12 +13,11 @@ public class StudentDashboard extends InterfaceApp implements ActionListener {
     private JButton viewExamsButton;
     private JButton calendarButton;
 
-    public StudentDashboard() {
-        super("StudentDashboard");
-        setTitle("Dashboard - Concert Manager");
-        setSize(400, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private JButton intershipSearchButton = new JButton("Rechercher un stage");
 
+    public StudentDashboard() {
+        super("Dashboard");
+        setSize(400, 300);
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(4, 1));
 
@@ -27,11 +28,13 @@ public class StudentDashboard extends InterfaceApp implements ActionListener {
         viewScoresButton.addActionListener(this);
         viewExamsButton.addActionListener(this);
         calendarButton.addActionListener(this);
+        intershipSearchButton.addActionListener(this);
 
         mainPanel.add(new JLabel("Tableau de bord de l'élève"));
         mainPanel.add(viewScoresButton);
         mainPanel.add(viewExamsButton);
         mainPanel.add(calendarButton);
+        mainPanel.add(intershipSearchButton);
 
         add(mainPanel);
     }
@@ -45,9 +48,10 @@ public class StudentDashboard extends InterfaceApp implements ActionListener {
         } else if (src == viewExamsButton) {
             JOptionPane.showMessageDialog(this, "Examens à venir : Math, Science, History,Physics,Chemistry");
         } else if (src == calendarButton) {
-
             CalendarGUI calendarGUI = new CalendarGUI();
             calendarGUI.setVisible(true);
+        } else if (src == intershipSearchButton) {
+            new SearchInternshipGUI();
         }
 
     }
