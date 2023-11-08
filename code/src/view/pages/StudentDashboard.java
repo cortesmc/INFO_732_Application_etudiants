@@ -21,7 +21,7 @@ public class StudentDashboard extends InterfaceApp implements ActionListener {
 
         viewScoresButton = new JButton("Voir les scores");
         viewExamsButton = new JButton("Voir les examens à venir");
-        calendarButton = new JButton("calendar");
+        calendarButton = new JButton("Calendrier");
 
         viewScoresButton.addActionListener(this);
         viewExamsButton.addActionListener(this);

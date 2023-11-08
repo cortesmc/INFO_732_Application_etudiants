@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SearchInternshipGUI extends InterfaceApp {
     private final JTextField searchStringField = new DefaultTextField();
     private final InternshipTableModel results = new InternshipTableModel();
-    private final JComboBox<String> specialityComboBox =  new JComboBox<>(new String[] {"", "PeiP1", "IDU3", "IDU4", "SNI3", "SNI4"});
+    private final JComboBox<String> specialityComboBox =  new JComboBox<>(new String[] {"", "FI4", "FI3", "PeiP1", "IDU3", "IDU4", "SNI3", "SNI4"});
     private final JComboBox<String> siteComboBox = new JComboBox<>(new String[]{"", "Annecy", "Chambéry"});
     private final JComboBox<String> sortComboBox = new JComboBox<>(new String[]{"", "Par titre", "Par année"});
 
@@ -16,6 +16,7 @@ public class SearchInternshipGUI extends InterfaceApp {
 
     public SearchInternshipGUI() {
         super("Stages");
+        setResizable(true);
 
         // TODO : Get internships from db
         internships = new ArrayList<>();

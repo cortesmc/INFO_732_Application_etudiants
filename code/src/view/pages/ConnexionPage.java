@@ -14,7 +14,7 @@ public class ConnexionPage extends InterfaceApp implements ActionListener {
     protected JPasswordField passwordInput;
 
     public ConnexionPage() {
-        super("Concert Manager - Connexion");
+        super("Connexion");
         setContentPane(mainPanel);
         backButton.addActionListener(this);
         connectButton.addActionListener(this);
