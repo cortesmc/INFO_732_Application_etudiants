@@ -42,7 +42,7 @@ public class ConnexionPage extends InterfaceApp implements ActionListener {
             // Check if user exists in db
             // TODO : Pass the user to the new page, handle UnknownUserException, WrongPasswordException
 //            if(validateLogin(login, password)) {
-                new AddEventGUI().setVisible(true);
+                new StudentDashboard();
                 dispose();
 //            }
         } else if(src == backButton) {

@@ -1,7 +1,5 @@
 package view.pages;
 
-import view.components.PrimaryButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
