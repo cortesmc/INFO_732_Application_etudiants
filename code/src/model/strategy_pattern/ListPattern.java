@@ -89,28 +89,4 @@ public class ListPattern implements AgendaGUIStrategy {
         panel.add(this.getJpanel()); // Assuming getJpanel() is a method that returns a JPanel
         return panel;
     }
-
-
-    /*public static void main(String[] args) {
-        JFrame frame = new JFrame("iCalendar Viewer");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-
-        Calendar calendar = null;
-        try {
-            URL url = new URL("https://ade-usmb-ro.grenet.fr/jsp/custom/modules/plannings/direct_cal.jsp?data=b5cfb898a9c27be94975c12c6eb30e9233bdfae22c1b52e2cd88eb944acf5364c69e3e5921f4a6ebe36e93ea9658a08f,1&resources=2393&projectId=1&calType=ical&lastDate=2042-08-14");
-            InputStream in = url.openStream();
-
-            CalendarBuilder builder = new CalendarBuilder();
-            calendar = builder.build(in);
-        } catch (IOException | ParserException e) {
-            e.printStackTrace();
-        }
-
-        ListPattern panel = new ListPattern(calendar);
-        frame.add(panel.getJpanel());
-
-        // Make the JFrame visible
-        frame.setVisible(true);
-    }*/
 }

@@ -43,15 +43,13 @@ public class CalendarGUI extends InterfaceApp {
             //Create button to change mode
             JButton btn = new JButton("Affichage en liste");
             panel1.add(btn);
-            btn.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    if (Objects.equals(btn.getText(), "Affichage standard")){
-                        createUIStandard();
-                        btn.setText("Affichage en liste");
-                    } else {
-                        createUIlist();
-                        btn.setText("Affichage standard");
-                    }
+            btn.addActionListener(e -> {
+                if (Objects.equals(btn.getText(), "Affichage standard")){
+                    createUIStandard();
+                    btn.setText("Affichage en liste");
+                } else {
+                    createUIlist();
+                    btn.setText("Affichage standard");
                 }
             });
 

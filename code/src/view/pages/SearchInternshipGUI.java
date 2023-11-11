@@ -81,7 +81,6 @@ public class SearchInternshipGUI extends InterfaceApp {
         endFrameCreation();
     }
 
-    // TODO : Finish this
     public void updateResultPanel() {
         String search = searchStringField.getText();
         String formation = specialityComboBox.getSelectedItem().toString();
@@ -89,24 +88,31 @@ public class SearchInternshipGUI extends InterfaceApp {
         String sortBy = sortComboBox.getSelectedItem().toString();
         results.clear();
 
-        ArrayList<ISearch> temp = new ArrayList<>(internships);
-        temp.addAll(internships);
-        ISearch searchBehavior = new SearchBehavior(temp);
+        // Making a copy of internships to avoid changing the original
+        ArrayList<ISearch> copy = new ArrayList<>(internships);
+        copy.addAll(internships);
 
-        if(!search.isEmpty())
-            searchBehavior = new FilterBehavior(searchBehavior, "title", search);
-        if(!formation.isEmpty())
-            searchBehavior = new FilterBehavior(searchBehavior, "speciality", formation);
-        if(!site.isEmpty())
-            searchBehavior = new FilterBehavior(searchBehavior, "site", site);
+        // Main decorator
+        ISearch searchBehavior = new SearchBehavior(copy);
+
+
+        // Setting sorting strategy decorator
         switch (sortBy) {
             case "": break;
             case "Par titre": searchBehavior = new SortByTitleStrategy(searchBehavior, true); break;
             case "Par année": searchBehavior = new SortByDateStrategy(searchBehavior, true); break;
         }
 
-        ArrayList<ISearch> shownInternships = searchBehavior.apply();
+        // Additional decorators
+        if(!search.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "title", search);
+        if(!formation.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "speciality", formation);
+        if(!site.isEmpty())
+            searchBehavior = new FilterBehavior(searchBehavior, "site", site);
 
+        // Apply all decorators
+        ArrayList<ISearch> shownInternships = searchBehavior.apply();
         for (ISearch internship : shownInternships) {
             results.add((Internship)internship);
         }

@@ -12,7 +12,6 @@ public class SearchBehavior implements ISearch {
         wrappee = null;
     }
 
-    // TODO : Implement this
     public ArrayList<ISearch> apply() {
         return wrappee;
     }
