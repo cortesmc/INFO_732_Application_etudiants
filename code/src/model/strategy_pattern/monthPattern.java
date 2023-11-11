@@ -3,6 +3,9 @@ package model.strategy_pattern;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.component.VEvent;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -10,6 +13,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -118,6 +122,7 @@ public class monthPattern implements AgendaGUIStrategy {
 
         //Refresh calendar
         refreshCalendar (realMonth, realYear); //Refresh calendar
+
         // Add a ListSelectionListener to respond to cell selection
         tblCalendar.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -126,6 +131,7 @@ public class monthPattern implements AgendaGUIStrategy {
                     int selectedRow = tblCalendar.getSelectedRow();
                     int selectedColumn = tblCalendar.getSelectedColumn();
                     if (selectedRow >= 0 && selectedColumn >= 0) {
+                        tblCalendar.clearSelection();
                         // Do something when a cell is clicked
                         String text = "";
                         for(int i = 0; i <= 8; i++) {
@@ -133,7 +139,7 @@ public class monthPattern implements AgendaGUIStrategy {
                             text += "\n\n";
                         }
 //                        System.out.println(mtblCalendar.getValueAt(selectedRow,selectedColumn));
-                        JOptionPane.showMessageDialog(null, text, "Détails ", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, getDayEvent(mtblCalendar.getValueAt(selectedRow,selectedColumn).toString(),String.valueOf(currentMonth+1),String.valueOf(currentYear)), "Détails ", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -178,6 +184,61 @@ public class monthPattern implements AgendaGUIStrategy {
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
 
+        public String getDayEvent(String day, String month, String year){
+            StringBuilder eventText = new StringBuilder();
+            for (Iterator it = this.calendar.getComponents().iterator(); it.hasNext(); ) {
+                var component = (net.fortuna.ical4j.model.Component) it.next();
+                if (component.getName().equals("VEVENT")) {
+                    VEvent event = (VEvent) component;
+
+                    // Ensure that the properties are of type Property
+                    Property summary = event.getProperty("SUMMARY").orElse(null);
+                    Property startDate = event.getProperty("DTSTART").orElse(null);
+                    Property endDate = event.getProperty("DTEND").orElse(null);
+                    Property location = event.getProperty("LOCATION").orElse(null);
+
+
+                    if (summary != null && startDate != null && endDate != null) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+
+                        try {
+                            Date startDateValue = dateFormat.parse(startDate.getValue());
+                            Date endDateValue = dateFormat.parse(endDate.getValue());
+                            SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            if(displayFormat.format(startDateValue).contains(year+"-"+month+"-"+day)){
+                                eventText.append("Summary: ").append(summary.getValue()).append("\n    Start Date: ").append(displayFormat.format(startDateValue)).append("\n   End Date: ").append(displayFormat.format(endDateValue)).append("\n   Location: ").append(location.getValue()).append("\n\n");
+
+                            }
+
+
+                        }catch (Exception e){
+                            System.out.println(e);
+                    }
+                    }
+                }
+        }
+    return eventText.toString();
+    }
+
+                    static class tblCalendarRenderer extends DefaultTableCellRenderer{
+                        public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
+                            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+                            if (column == 0 || column == 6){ //Week-end
+                                setBackground(new Color(255, 220, 220));
+                            }
+                            else{ //Week
+                                setBackground(new Color(255, 255, 255));
+                            }
+                            if (value != null){
+                                if (Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth && currentYear == realYear){ //Today
+                                    setBackground(new Color(220, 220, 255));
+                                }
+                            }
+                            setBorder(null);
+                            setForeground(Color.black);
+                            return this;
+                        }
+                    }
     static class tblCalendarRenderer extends DefaultTableCellRenderer{
         public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
@@ -232,3 +293,42 @@ public class monthPattern implements AgendaGUIStrategy {
         }
     }
 }
+                    static class btnPrev_Action implements ActionListener{
+                        public void actionPerformed (ActionEvent e){
+                            if (currentMonth == 0){ //Back one year
+                                currentMonth = 11;
+                                currentYear -= 1;
+                            }
+                            else{ //Back one month
+                                currentMonth -= 1;
+                            }
+                            refreshCalendar(currentMonth, currentYear);
+                        }
+                    }
+                    static class btnNext_Action implements ActionListener{
+                        public void actionPerformed (ActionEvent e){
+                            if (currentMonth == 11){ //Foward one year
+                                currentMonth = 0;
+                                currentYear += 1;
+                            }
+                            else{ //Foward one month
+                                currentMonth += 1;
+                            }
+                            refreshCalendar(currentMonth, currentYear);
+                        }
+                    }
+                    static class cmbYear_Action implements ActionListener{
+                        public void actionPerformed (ActionEvent e){
+                            if (cmbYear.getSelectedItem() != null){
+                                String b = cmbYear.getSelectedItem().toString();
+                                currentYear = Integer.parseInt(b);
+                                refreshCalendar(currentMonth, currentYear);
+                            }
+                        }
+                    }}
+
+
+
+
+
+
