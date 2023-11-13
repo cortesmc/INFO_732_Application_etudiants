@@ -17,4 +17,4 @@ Vous devez concevoir une application destinée a aider les étudiants dans leur 
 ![Alt text](image.png)
 
 ## Librairie a installé:
--biweekly http://search.maven.org/remotecontent?filepath=net/sf/biweekly/biweekly/0.6.7/biweekly-0.6.7.jar
+-ICAL4J (présent dans le dossier lib)
