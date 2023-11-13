@@ -17,4 +17,4 @@ Vous devez concevoir une application destinée a aider les étudiants dans leur 
 ![Alt text](image.png)
 
 ## Librairie a installé:
--ICAL4J (présent dans le dossier lib)
+Toutes les librairies présentent dans le dossier jar.
